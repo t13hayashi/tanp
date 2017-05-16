@@ -6,21 +6,26 @@
 
 namespace App\Controller;
 
+use Cake\Datasource\ConnectionManager;
+
 class ArticlesController extends AppController {
 
     public function index() {
-        $articles = $this->Articles->find('all');
+        $articles = $this->Articles->find('all', [
+            'contain' => ['Users']
+        ]);
         // $this->set('articles', $articles);
         $this->set(compact('articles'));
     }
 
     public function add() {
         // articleを新しく作る
-        //articlesテーブルのレコードの中のMaxIDを取得
-        $query = $this->Articles->find();
-        $ret = $query->select(['max_id' => $query->func()->max('id')])->first();
-        //新規作成するarticleのidを$idに代入
-        $id = $ret->max_id + 1;
+
+        //auto_incrementの次回値を取得
+        $connection = ConnectionManager::get('default');
+        $results = $connection->execute('SELECT auto_increment FROM information_schema.tables WHERE table_name = \'articles\'')->fetchAll('assoc');
+        $id = $results[0]['auto_increment'];
+
         $this->redirect(['action'=>'edit', $id]);
     }
 
@@ -50,4 +55,17 @@ class ArticlesController extends AppController {
         $this->set(compact('article'));
         $this->set(compact('items'));
     }
+
+
+    public function delete() {
+        $this->autoRender = FALSE;
+
+        $id = $_POST['id'];
+        $this->request->allowMethod(['post', 'delete']);
+        $article = $this->Articles->get($id);
+        $this->Articles->delete($article);
+
+        return;
+    }
+
 }

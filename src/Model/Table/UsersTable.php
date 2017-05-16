@@ -10,7 +10,9 @@ class UsersTable extends Table
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
-        $this->hasMany('Articles');
+        $this->hasMany('Articles', [
+            'dependent' => true
+        ]);
     }
 
     public function validationDefault(Validator $validator)

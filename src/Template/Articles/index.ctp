@@ -16,9 +16,9 @@ $this->assign('title', '記事一覧');
             echo '<p class="article-body">';
             echo $article->description;
             echo '</p>';
-            //echo '<p class="article-published">2015/10/05 01:05</p>';
-            //echo '<p class="article-user"> | ';
-            //echo '<span><a href="/user/6">test_user</a></span></p>';
+            echo '<p class="article-published">'.$article->created.'</p>';
+            echo '<p class="article-user"> | ';
+            echo '<span><a href="/user/6">'.$article->user->username.'</a></span></p>';
             echo '<div class="clearfix"></div></li>';
         }
         ?>

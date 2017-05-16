@@ -26,12 +26,27 @@ $(document).on('click', '.article_save', function() {
 
 $(document).on('click', '.delete', function() {
     if(confirm('本当に削除してよろしいですか？')){
-        var item=$(this).closest("li");
-        $.post('/articles/delete/'+item.data('id'),{  },function(res){
-            $(item).fadeOut();
-        },"json");
-    }return false;
-})
+        var item = $(this).closest("li");
+        $.ajax(
+            {
+                type: "POST", //POSTで渡す
+                url: "/articles/delete", //AddController.phpを動かすためのパス
+                data: {
+                    "id": item.attr('id')
+                },
+                dataType: "text",
+                success: function (data)
+                {
+                    $(item).fadeOut();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) //通信失敗
+                {
+                    alert('処理できませんでした');
+                }
+            });
+    }
+    return false;
+});
 
 
 //item編集バーの表示切り替え
