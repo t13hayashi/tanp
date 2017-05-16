@@ -11,7 +11,7 @@ $this->assign('title', '記事編集');
 
 編集画面:
 <form id="article_form" method="post" accept-charset="utf-8">
-    <!--<input type="hidden" name="data[Article][id]" value="599" />-->
+    <input type="hidden" name="id" value="<?= $article->id; ?>"/>
     <input type="hidden" name="item_order" value="" />
     <div id="article_form_header" class="clearfix">
         <div style="float: right;">
@@ -29,13 +29,13 @@ $this->assign('title', '記事編集');
 
             </div>
             <div>
-                <textarea id="articleBody" class="form-control" name="description" placeholder="まとめの説明（160文字以内）" rows="4"></textarea>
+                <textarea id="articleBody" class="form-control" name="description" placeholder="まとめの説明（160文字以内）" rows="4"><?= $article->description ?></textarea>
                 <p id="desc_count"><span id="desc_count_span" style="color: rgb(255, 0, 0);"></span>文字(推奨:110~130文字)</p>
             </div>
         </div>
         <div class="clearfix">
             <p style="display:inline-block;vertical-align: middle;">サムネイル画像：</p>
-            <input id="thumb-form" class="form-control" name="image" placeholder="画像のURLを入力" type="url" value="">
+            <input id="thumb-form" class="form-control" name="image" placeholder="画像のURLを入力" type="url" value="<?= $article->image ?>">
         </div>
     </div>
 </form>
@@ -59,6 +59,21 @@ $this->assign('title', '記事編集');
             </form>
         </div>
         <div id="sortable">
+            <?php if($items != ""): ?>
+            <?php foreach ($items as $item): ?>
+                <div class="item" id="<?= $item->id ?>">
+                    <p class="<?= $item->content_type; ?>"><?= $item->content; ?></p>
+                    <ul class="editpager clearfix unvisible">
+                        <li class="first_order">一番上へ</li>
+                        <li class="minus_order">上へ</li>
+                        <li class="plus_order">下へ</li>
+                        <li class="last_order">一番下へ</li>
+                        <li class="edit_item">編集</li>
+                        <li class="delete_item">削除</li>
+                    </ul>
+                </div>
+            <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

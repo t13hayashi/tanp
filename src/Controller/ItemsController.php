@@ -106,11 +106,11 @@ class ItemsController extends AppController {
 
         switch($content_type) {
             case 'headline_big':
-                $itemDom = $itemDomStart.'<h1 class="headline_big">'.$content.'</h1>'.$itemDomEnd;
+                $itemDom = $itemDomStart.'<p class="headline_big">'.$content.'</p>'.$itemDomEnd;
                 echo $itemDom;
                 break;
             case 'headline_small':
-                $itemDom = $itemDomStart.'<h2 class="headline_small">'.$content.'</h2>'.$itemDomEnd;
+                $itemDom = $itemDomStart.'<p class="headline_small">'.$content.'</p>'.$itemDomEnd;
                 echo $itemDom;
                 break;
             case 'text':

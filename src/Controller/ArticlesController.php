@@ -30,12 +30,19 @@ class ArticlesController extends AppController {
     }
 
     public function edit($id) {
+        $this->loadModel('Items');
         if ($this->Articles->exists(['id' => $id])) {
             $article = $this->Articles->get($id);
+            $items = $this->Items->find('all', array(
+                'conditions' => array ('Items.article_id' => $article->id),
+                'order' => 'FIELD(Items.id,'.$article->item_order.')'
+            ));
         } else {
             $article = $this->Articles->newEntity();
             $article->user_id = $this->Auth->user('id');
+            $items = "";
         }
+        $this->set(compact('items'));
         $article_id = $id;
         $this->set(compact('article_id'));
         if ($this->request->is(['patch', 'post', 'put'])) {
