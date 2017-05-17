@@ -9,7 +9,7 @@ $this->assign('title', '記事閲覧');
         <div class="article-disp">
             <h1 class="article-title"><?= $article->title; ?></h1>
             <p class="article-body"><?= $article->description; ?></p>
-            <p class="article-count">??? view</p>
+            <p class="article-count"><?= $article->counter; ?> view</p>
         </div>
     </div>
     <div class="article-items">

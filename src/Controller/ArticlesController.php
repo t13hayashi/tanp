@@ -60,6 +60,13 @@ class ArticlesController extends AppController {
             'conditions' => array ('Items.article_id' => $article->id),
             'order' => 'FIELD(Items.id,'.$article->item_order.')'
         ));
+
+        //閲覧数カウントアップ
+        $counter = $article->counter;
+        $counter++;
+        $article->set('counter', $counter);
+        $this->Articles->save($article);
+
         $this->set(compact('article'));
         $this->set(compact('items'));
     }
