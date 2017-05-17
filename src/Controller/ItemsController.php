@@ -106,18 +106,35 @@ class ItemsController extends AppController {
 
         switch($content_type) {
             case 'headline_big':
-                $itemDom = $itemDomStart.'<p class="headline_big">'.$content.'</p>'.$itemDomEnd;
+                $itemDom = $itemDomStart.'<p class="headline_big">'.nl2br(h($content)).'</p>'.$itemDomEnd;
                 echo $itemDom;
                 break;
             case 'headline_small':
-                $itemDom = $itemDomStart.'<p class="headline_small">'.$content.'</p>'.$itemDomEnd;
+                $itemDom = $itemDomStart.'<p class="headline_small">'.nl2br(h($content)).'</p>'.$itemDomEnd;
                 echo $itemDom;
                 break;
             case 'text':
-                $itemDom = $itemDomStart.'<p class="text">'.$content.'</p>'.$itemDomEnd;
+                $itemDom = $itemDomStart.'<p class="text">'.nl2br(h($content)).'</p>'.$itemDomEnd;
                 echo $itemDom;
                 break;
         }
+    }
+
+    public function isAuthorized($user = null)
+    {
+        // All registered users can add articles
+        if (in_array($this->request->getParam('action'), ['add', 'update', 'delete'])) {
+            return true;
+        }
+
+        // それ以外は役割がadminだったら許可
+        if($user['role'] === 'admin')
+        {
+            return true;
+        }
+
+        // 抜けたものはとりあえず非許可
+        return false;
     }
 
 

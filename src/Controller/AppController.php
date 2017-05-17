@@ -48,6 +48,7 @@ class AppController extends Controller
 
         //Auth
         $this->loadComponent('Auth', [
+            'authorize' => ['Controller'], // Added this line
             'loginRedirect' => [
                 'controller' => 'Articles',
                 'action' => 'index'
@@ -74,6 +75,7 @@ class AppController extends Controller
         // Default deny
         return false;
     }
+
 
     public function beforeFilter(Event $event)
     {

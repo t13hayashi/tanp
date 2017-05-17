@@ -43,8 +43,9 @@ class ArticlesController extends AppController {
             $items = "";
         }
         $this->set(compact('items'));
-        $article_id = $id;
-        $this->set(compact('article_id'));
+        /*$article_id = $id;
+        $this->set(compact('article_id'));*/
+        $this->set('article_id', $id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $article = $this->Articles->patchEntity($article, $this->request->data);
             $this->Articles->save($article);
@@ -74,5 +75,35 @@ class ArticlesController extends AppController {
 
         return;
     }
+
+    public function isAuthorized($user = null)
+    {
+        // All registered users can add articles
+        if (in_array($this->request->getParam('action'), ['index', 'add', 'edit'])) {
+            return true;
+        }
+
+        //記事の持ち主のみ編集可能
+        // The owner of an article can edit and delete it
+        if ($this->request->getParam('action') === 'edit') {
+            //
+            //
+            //
+            //
+            //
+            return true;
+        }
+
+        // 役割がadminだったら許可
+        if($user['role'] === 'admin')
+        {
+            return true;
+        }
+
+        // 抜けたものはとりあえず非許可
+        return false;
+    }
+
+
 
 }

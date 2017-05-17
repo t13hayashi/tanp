@@ -66,4 +66,23 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
+    public function isAuthorized($user = null)
+    {
+        $id = $this->request->params['pass'][0];
+
+        //他人のマイページは見れないようにする
+        if ($this->request->getParam('action') === 'mypage' && $id == $user['id']) {
+            return true;
+        }
+
+        // adminだったら許可
+        if($user['role'] === 'admin')
+        {
+            return true;
+        }
+
+        // 抜けたものはとりあえず非許可
+        return false;
+    }
+
 }

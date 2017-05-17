@@ -15,7 +15,7 @@ $this->assign('title', '記事閲覧');
     <div class="article-items">
         <?php foreach ($items as $item): ?>
         <div>
-            <p class="article-item <?= $item->content_type; ?>"><?= $item->content; ?></p>
+            <p class="article-item <?= $item->content_type; ?>"><?= nl2br(h($item->content)); ?></p>
         </div>
         <?php endforeach; ?>
     </div>

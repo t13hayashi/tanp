@@ -20,7 +20,7 @@ $this->assign('title', '記事編集');
     </div>
     <div class="clearfix">
         <div id="articleThumb" style="margin-bottom: 10px;">
-            <img id="thumb" src="" onerror="this.src='http://image.topicks.jp/assets/noimage.png';">
+            <img id="thumb" src="<?= $article->image ?>" onerror="this.src='http://image.topicks.jp/assets/noimage.png';">
         </div>
         <div style="width:800px; float:left;">
             <div>
